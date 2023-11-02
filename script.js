@@ -40,14 +40,13 @@ function getComputerChoice() {
         case 0:
             pcChoice = 'scissors'
             break;
-        default:
-            console.error("what");
     }
     return pcChoice;
 }
 
 function playRound(playerSelection, computerSelection) {
     let result;
+    //checks if player won
     if(playerSelection === 'rock'&& computerSelection === 'scissors' || playerSelection === 'scissors'&& computerSelection === 'paper' || playerSelection === 'paper'&& computerSelection === 'rock') {
         result = `You Won! ${playerSelection} beats ${computerSelection}.`;
         }
