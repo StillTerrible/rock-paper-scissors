@@ -1,3 +1,4 @@
+//v1.0 gets players choice thru prompt
 function getPlayerChoice(){
     let keepGoing = true;
     let choice;
@@ -44,7 +45,7 @@ function getComputerChoice() {
     return pcChoice;
 }
 
-function playRound(playerSelection, computerSelection) {
+function emulateRound(playerSelection, computerSelection) {
     let result;
     //checks if player won
     if(playerSelection === 'rock'&& computerSelection === 'scissors' || playerSelection === 'scissors'&& computerSelection === 'paper' || playerSelection === 'paper'&& computerSelection === 'rock') {
@@ -63,6 +64,7 @@ function playRound(playerSelection, computerSelection) {
     return result;
 }
 
+//original game starting thru console. not used after the UI update.
 function game() {
     let playerWins = 0;
     let computerWins = 0;
@@ -70,7 +72,7 @@ function game() {
 
     for (let i = 1;i <= 5; i++) {
         console.log('Round '+ i + ':');
-        let result = playRound(getPlayerChoice(),getComputerChoice()); //runs the game
+        let result = emulateRound(getPlayerChoice(),getComputerChoice()); //runs the game
         if (result.includes("Won")){
             playerWins++;
             console.log(result);
@@ -101,6 +103,31 @@ function game() {
     and ${ties} ties.`)
 }
 
+const results = document.querySelector('#result-output');
+const rpsButtons = document.querySelector('#rps-buttons');
+const scoreDiv = document.querySelector('#score');
+const score = {pc: 0, player: 0};
 
-game();
+scoreDiv.textContent = `Player ${score.player} - ${score.pc} Computer`;
+rpsButtons.addEventListener('click', function(event) {
+    let gameResult = emulateRound(event.target.className, getComputerChoice());   
+    results.textContent = gameResult;
+
+    if (gameResult.includes("Won")){
+        score.player++;
+    }
+    else {
+        score.pc++;
+    }
+
+    if (score.player === 5) {
+        console.log('win');
+    }
+    else if (score.pc === 5) {
+        console.log('lose');
+    }
+    scoreDiv.textContent = `Player ${score.player} - ${score.pc} Computer`;
+});
+
+
 
